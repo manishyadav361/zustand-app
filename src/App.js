@@ -1,23 +1,35 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import useTodoStore from './stores/todos';
 
 function App() {
+
+  const {count, todos, addTodo, removeTodo} = useTodoStore()
+
+  const [inputValue, setInputValue] = useState("");
+
+  function handleInputChange(e) {
+    setInputValue(e.target.value)
+  }
+
+  function handleAddTodo() {
+    addTodo(inputValue)
+  }
+
+  function handleRemoveTodo(index) {
+    removeTodo(index)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input type="text" onChange={handleInputChange} /><button onClick={handleAddTodo}>Add</button>
+  
+      <p>Todos: {count}</p>
+      {
+        todos.map((todo, index) => (
+          <div key={index}>{todo} <button onClick={() => handleRemoveTodo(index)}>Remove</button></div>
+        ))
+      }
     </div>
   );
 }
