@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import './App.css';
-import useTodoStore from './stores/todos';
+import useTodoStore, { TODO_ACTION } from './stores/todos';
 
 function App() {
 
-  const {count, todos, addTodo, removeTodo} = useTodoStore()
+  const {count, todos, dispatch} = useTodoStore()
 
   const [inputValue, setInputValue] = useState("");
 
@@ -13,11 +13,11 @@ function App() {
   }
 
   function handleAddTodo() {
-    addTodo(inputValue)
+    dispatch({type: TODO_ACTION.ADD_TODO , payload: inputValue});
   }
 
   function handleRemoveTodo(index) {
-    removeTodo(index)
+    dispatch({type: TODO_ACTION.REMOVE_TODO, payload: index})
   }
 
   return (
